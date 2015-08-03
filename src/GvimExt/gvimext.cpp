@@ -85,7 +85,15 @@ getGvimName(char *name, int runtime)
     static void
 getGvimInvocation(char *name, int runtime)
 {
+    char safeName[MAX_PATH * 2];
     getGvimName(name, runtime);
+    if (name[0] != '\"') 
+    {
+	strcpy(safeName, "\"");
+	strcat(safeName, name);
+	strcat(safeName, "\"");
+	strcpy(name, safeName);
+    }
     // avoid that Vim tries to expand wildcards in the file names
     strcat(name, " --literal");
 }
